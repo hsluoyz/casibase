@@ -21,6 +21,35 @@ import (
 	"xorm.io/core"
 )
 
+type TaskResultItem struct {
+	Name         string  `json:"name"`
+	Score        float64 `json:"score"`
+	Advantage    string  `json:"advantage"`
+	Disadvantage string  `json:"disadvantage"`
+	Suggestion   string  `json:"suggestion"`
+}
+
+type TaskResultCategory struct {
+	Name  string            `json:"name"`
+	Score float64           `json:"score"`
+	Items []*TaskResultItem `json:"items"`
+}
+
+type TaskResult struct {
+	Title         string                `json:"title"`
+	Designer      string                `json:"designer"`
+	Stage         string                `json:"stage"`
+	Participants  string                `json:"participants"`
+	Grade         string                `json:"grade"`
+	Instructor    string                `json:"instructor"`
+	Subject       string                `json:"subject"`
+	School        string                `json:"school"`
+	OtherSubjects string                `json:"otherSubjects"`
+	Textbook      string                `json:"textbook"`
+	Score         float64               `json:"score"`
+	Categories    []*TaskResultCategory `json:"categories"`
+}
+
 type Task struct {
 	Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
 	Name        string `xorm:"varchar(100) notnull pk" json:"name"`
@@ -32,7 +61,7 @@ type Task struct {
 
 	Subject  string `xorm:"varchar(100)" json:"subject"`
 	Topic    string `xorm:"varchar(100)" json:"topic"`
-	Result   string `xorm:"varchar(100)" json:"result"`
+	Score    float64 `xorm:"float" json:"score"`
 	Activity string `xorm:"varchar(100)" json:"activity"`
 	Grade    string `xorm:"varchar(100)" json:"grade"`
 
@@ -41,6 +70,8 @@ type Task struct {
 	Example string   `xorm:"varchar(200)" json:"example"`
 	Labels  []string `xorm:"mediumtext" json:"labels"`
 	Log     string   `xorm:"mediumtext" json:"log"`
+
+	Result *TaskResult `xorm:"mediumtext" json:"result"`
 
 	DocumentUrl  string `xorm:"varchar(500)" json:"documentUrl"`
 	DocumentText string `xorm:"mediumtext" json:"documentText"`
